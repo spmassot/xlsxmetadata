@@ -5,7 +5,7 @@ import re
 def get_dimensions(xlsx_file, sheet_name):
     sheet_id = get_sheet_names(xlsx_file).get(sheet_name)
     full_sheet_name = f'xl/worksheets/sheet{sheet_id}.xml'
-    dimension_tag = re.compile(r'<dimension\sref="(.*?)"\/>')
+    dimension_tag = re.compile(r'<dimension\sref="(.*?)".*?\/>')
     with ZipFile(xlsx_file) as zipfile:
         with zipfile.open(full_sheet_name) as sheet:
             dimensions = _get_dim_recursive_(sheet, dimension_tag)
