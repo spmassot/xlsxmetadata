@@ -3,7 +3,7 @@ import metadata as m
 
 
 def test_get_dimensions():
-    assert m.get_dimensions('./test_file.xlsx', 'sheet1') == dict(
+    assert m.get_dimensions('./test_file.xlsx', 'test_sheet') == dict(
         start_column=1,
         start_row=1,
         end_column=16384,
@@ -47,3 +47,7 @@ def test_letters_to_number():
     )
     for k, v in test_cases.items():
         assert m.letters_to_number(k) == v
+
+
+def test_get_sheet_names():
+    assert m.get_sheet_names('./test_file.xlsx') == {'test_sheet': 1}
