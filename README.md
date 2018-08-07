@@ -2,7 +2,7 @@
 Really lightweight lib for peeking into xlsx column/row size before you try to open the file with something else
 
 ```python
-from metadata import get_dimensions, get_sheet_names
+from xlsxmetadata.metadata import get_dimensions, get_sheet_names
 
 my_big_file = '/path/to/my/real_big_file.xlsx'
 
