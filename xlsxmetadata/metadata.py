@@ -1,5 +1,4 @@
 from zipfile import ZipFile
-from io import BytesIO
 import re
 
 
@@ -7,7 +6,6 @@ def get_dimensions(xlsx_file, sheet_name):
     sheet_id = get_sheet_names(xlsx_file).get(sheet_name)
     full_sheet_name = f'xl/worksheets/sheet{sheet_id}.xml'
     dimension_tag = re.compile(r'<dimension\sref="(.*?)".*?\/>')
-    xlsx_file = get_file_obj(xlsx_file)
     with ZipFile(xlsx_file) as zipfile:
         with zipfile.open(full_sheet_name) as sheet:
             dimensions = _get_dim_recursive_(sheet, dimension_tag)
@@ -47,7 +45,6 @@ def get_sheet_names(xlsx_file):
     sheet_name_regex = re.compile(
         r'<sheet\sname="(?P<name>.+?)"\ssheetId="(?P<id>\d+)"'
     )
-    xlsx_file = get_file_obj(xlsx_file)
     with ZipFile(xlsx_file) as zipfile:
         with zipfile.open('xl/workbook.xml') as wb:
             book_data = wb.read()
@@ -57,10 +54,3 @@ def get_sheet_names(xlsx_file):
         dct = match.groupdict()
         all_sheets_with_ids.update({dct['name']: int(dct['id'])})
     return all_sheets_with_ids
-
-
-def get_file_obj(file_obj):
-    if isinstance(file_obj, str):
-        return file_obj
-    else:
-        return BytesIO(file_obj.read())
