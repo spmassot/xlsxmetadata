@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='xlsxmetadata',
-    version='0.0.1',
+    version='0.0.2',
     author='automatonymous',
     author_email='spmassot@gmail.com',
     description='Really lightweight lib for peeking into xlsx column/row size before you try to open the file with something else',
