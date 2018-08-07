@@ -11,7 +11,6 @@ setuptools.setup(
     author_email='spmassot@gmail.com',
     description='Really lightweight lib for peeking into xlsx column/row size before you try to open the file with something else',
     long_description=long_description,
-    long_description_content_type='text/markdown',
     url='https://github.com/spmassot/xlsxmetadata',
     packages=['xlsxmetadata'],
     zip_safe=False
