@@ -24,7 +24,7 @@ print(dimensions['end_row'])
 
 ### reading from flask form...
 ```python
-from io Import BytesIO
+from io import BytesIO
 from xlsxmetadata.metadata import get_dimensions, get_sheet_names
 
 my_big_file = request.files.get('my_big_file')
