@@ -1,6 +1,9 @@
 # xlsx-metadata
 Really lightweight lib for peeking into xlsx column/row size before you try to open the file with something else
 
+### setup
+```pip install xlsxmetadata```
+
 ### reading from file...
 ```python
 from xlsxmetadata.metadata import get_dimensions, get_sheet_names
