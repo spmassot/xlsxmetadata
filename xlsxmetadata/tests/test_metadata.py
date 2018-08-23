@@ -33,7 +33,7 @@ def test__parse_dimensions_():
         )
     }
 
-    for k, v  in test_cases.items():
+    for k, v in test_cases.items():
         assert m._parse_dimensions_(k) == v
 
 

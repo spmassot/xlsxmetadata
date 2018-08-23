@@ -22,16 +22,28 @@ def _get_dim_recursive_(sheet, dimension_tag):
 
 
 def _parse_dimensions_(dim):
-    dim_regex = re.compile(
-        r'(?P<startcol>[A-Z]+)(?P<startrow>\d+):(?P<endcol>[A-Z]+)(?P<endrow>\d+)'
-    )
-    match = dim_regex.match(dim)
-    return dict(
-        start_column=letters_to_number(match.group('startcol')),
-        start_row=int(match.group('startrow')),
-        end_column=letters_to_number(match.group('endcol')),
-        end_row=int(match.group('endrow'))
-    )
+    dim = dim.split(':')
+    dim_regex = re.compile(r'(?P<col>[A-Z]+)(?P<row>\d+)')
+    if len(dim) == 1:
+        match = dim_regex.match(dim[0])
+        dimensions = dict(
+            start_column=letters_to_number(match.group('col')),
+            start_row=int(match.group('row')),
+            end_column=letters_to_number(match.group('col')),
+            end_row=int(match.group('row'))
+        )
+    elif len(dim) == 2:
+        match_start = dim_regex.match(dim[0])
+        match_end = dim_regex.match(dim[1])
+        dimensions = dict(
+            start_column=letters_to_number(match_start.group('col')),
+            start_row=int(match_start.group('row')),
+            end_column=letters_to_number(match_end.group('col')),
+            end_row=int(match_end.group('row'))
+        )
+    else:
+        raise AttributeError('The dimensions tag is invalid')
+    return dimensions
 
 
 def letters_to_number(letters):
@@ -49,8 +61,4 @@ def get_sheet_names(xlsx_file):
         with zipfile.open('xl/workbook.xml') as wb:
             book_data = wb.read()
     matches = sheet_name_regex.finditer(str(book_data))
-    all_sheets_with_ids = {}
-    for match in matches:
-        dct = match.groupdict()
-        all_sheets_with_ids.update({dct['name']: int(dct['id'])})
-    return all_sheets_with_ids
+    return {match.groupdict()['name']: i+1 for i, match in enumerate(matches)}
